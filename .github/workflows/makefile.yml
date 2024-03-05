@@ -1,0 +1,27 @@
+name: Makefile CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    # - name: configure
+    #   run: ./configure
+
+    - name: Install dependencies
+      run: make
+
+    - name: Run check
+      run: make check
+
+    - name: Run distcheck
+      run: make crkbd/rev1:via:flash -e USER_NAME=brittonr -e POINTING_DEVICE=cirque35 -e POINTING_DEVICE_POSITION=right -j8
